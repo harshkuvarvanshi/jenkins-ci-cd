@@ -3,21 +3,15 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo "Jenkins automatically pulls code from GitHub"
+                echo 'Code Jenkins khud GitHub se le raha hai'
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo "Static HTML project – no build needed"
-            }
-        }
-
-        stage('Docker Build') {
-            steps {
-                sh 'docker build -t html-site:latest .'
+                sh 'docker build -t html-site .'
             }
         }
 
@@ -25,7 +19,7 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f html-site || true
-                docker run -d -p 8081:80 --name html-site html-site:latest
+                docker run -d -p 8081:80 --name html-site html-site
                 '''
             }
         }
